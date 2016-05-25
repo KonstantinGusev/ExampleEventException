@@ -15,7 +15,6 @@ namespace ConsoleApplication35
             Person p = new Person();
             p.ParseName();
             Console.WriteLine(p);
-
         }
 
         
