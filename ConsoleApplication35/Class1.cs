@@ -46,101 +46,108 @@ namespace ConsoleApplication35
                     }
                 }
 
-                Console.WriteLine(@"Доступные действия
+                
+                users.CollectionChanged += Users_CollectionChanged;
+
+                while (true)
+                {
+                    Console.WriteLine(@"Доступные действия
 1) Добавление
 2) Удаление
 3) Изменение
+4) Выход
 ");
-                users.CollectionChanged += Users_CollectionChanged;
+                    int b = int.Parse(Console.ReadLine());
+                    switch (b)
+                    {
+                        case 1:
+                            Console.WriteLine("Введите имя и возраст нового участника");
 
-                
-                int b = int.Parse(Console.ReadLine());
-                switch (b)
+                            string z = Console.ReadLine();
+                            int l = int.Parse(Console.ReadLine());
 
-                {
-                    case 1:
-                        Console.WriteLine("Введите имя и возраст нового участника");
+                            if (l > 150)
+                            {
+                                Console.WriteLine("Ошибка ввода возраста");
+                                Environment.Exit(1);
+                            }
 
-                        string z = Console.ReadLine();
-                        int l = int.Parse(Console.ReadLine()); 
+                            foreach (User theNameAge in users2)
+                            {
+                                Console.WriteLine("Старый список " + theNameAge.Name + "  " + theNameAge.Age + "\n");
+                            }
 
-                        if (l> 150)
-                        {
-                            Console.WriteLine("Ошибка ввода возраста");
-                            Environment.Exit(1);
-                        }
+                            users.Add(new User { Name = z, Age = l });
 
-                        foreach (User theNameAge in users2)
-                        {
-                            Console.WriteLine("Старый список " + theNameAge.Name + "  " + theNameAge.Age + "\n");
-                        }
+                            foreach (User theNameAge in users)
+                            {
+                                Console.WriteLine("Новый список " + theNameAge.Name + "  " + theNameAge.Age + "\n");
+                            }
 
-                        users.Add(new User { Name =z , Age = l});
+                            break;
 
-                        foreach (User theNameAge in users)
-                        {
-                            Console.WriteLine("Новый список " + theNameAge.Name + "  " + theNameAge.Age + "\n");
-                        }
+                        case 2:
+                            Console.WriteLine("Введите индекс удаляемого обьекта");
+                            int g = int.Parse(Console.ReadLine());
 
-                        break;
+                            if (g > 3)
+                            {
+                                Console.WriteLine("Выход за пределы массива");
+                                Environment.Exit(2);
+                            }
 
-                    case 2:
-                        Console.WriteLine("Введите индекс удаляемого обьекта");
-                        int g = int.Parse(Console.ReadLine());
+                            foreach (User theNameAge in users2)
+                            {
+                                Console.WriteLine("Старый список " + theNameAge.Name + "  " + theNameAge.Age);
+                            }
 
-                        if(g>3)
-                        {
-                            Console.WriteLine("Выход за пределы массива");
-                            Environment.Exit(2);
-                        }
-                        
-                        foreach (User theNameAge in users2)
-                        {
-                            Console.WriteLine("Старый список " + theNameAge.Name + "  " + theNameAge.Age);
-                        }
+                            users.RemoveAt(g);
 
-                        users.RemoveAt(g);
-                       
-                        foreach (User theNameAge in users)
-                        {
-                            Console.WriteLine("Новый список " + theNameAge.Name + "  " + theNameAge.Age );
-                        }
-                        break;
+                            foreach (User theNameAge in users)
+                            {
+                                Console.WriteLine("Новый список " + theNameAge.Name + "  " + theNameAge.Age);
+                            }
+                            break;
 
-                    case 3:
-                        Console.WriteLine("Введите индекс изменяемого обьекта");
+                        case 3:
+                            Console.WriteLine("Введите индекс изменяемого обьекта");
 
-                        int a = int.Parse(Console.ReadLine());
+                            int a = int.Parse(Console.ReadLine());
 
-                        if (a > 3)
-                        {
-                            Console.WriteLine("Выход за пределы массива");
-                            Environment.Exit(2);
-                        }
+                            if (a > 3)
+                            {
+                                Console.WriteLine("Выход за пределы массива");
+                                Environment.Exit(2);
+                            }
 
-                        Console.WriteLine("Введите новое имя и новый возраст");
+                            Console.WriteLine("Введите новое имя и новый возраст");
 
-                        string t = Console.ReadLine();
-                        int y = int.Parse(Console.ReadLine());
+                            string t = Console.ReadLine();
+                            int y = int.Parse(Console.ReadLine());
 
-                        if (y > 150)
-                        {
-                            Console.WriteLine("Ошибка ввода возраста");
-                            Environment.Exit(1);
-                        }
+                            if (y > 150)
+                            {
+                                Console.WriteLine("Ошибка ввода возраста");
+                                Environment.Exit(1);
+                            }
 
-                        foreach (User theNameAge in users2)
-                        {
-                            Console.WriteLine("Старый список " + theNameAge.Name + "  " + theNameAge.Age + "\n");
-                        }
+                            foreach (User theNameAge in users2)
+                            {
+                                Console.WriteLine("Старый список " + theNameAge.Name + "  " + theNameAge.Age + "\n");
+                            }
 
-                        users[a] = new User { Name = t, Age = y };
+                            users[a] = new User { Name = t, Age = y };
 
-                        foreach (User theNameAge in users)
-                        {
-                            Console.WriteLine("Новый список " + theNameAge.Name + "  " + theNameAge.Age + "\n");
-                        }
-                        break;
+                            foreach (User theNameAge in users)
+                            {
+                                Console.WriteLine("Новый список " + theNameAge.Name + "  " + theNameAge.Age + "\n");
+                            }
+                            break;
+
+                        case 4:
+                            Environment.Exit(5);
+                            break;
+                    }
                 }
             }
             catch
@@ -156,20 +163,20 @@ namespace ConsoleApplication35
                 case NotifyCollectionChangedAction.Add: // если добавление
 
                     User newUser = e.NewItems[0] as User;
-                    Console.WriteLine("Добавлен новый объект: {0}", newUser.Name);
+                    Console.WriteLine("Добавлен новый объект: {0}\n", newUser.Name);
                     break;
 
                 case NotifyCollectionChangedAction.Remove: // если удаление
 
                     User oldUser = e.OldItems[0] as User;
-                    Console.WriteLine("Удален объект: {0}", oldUser.Name);
+                    Console.WriteLine("Удален объект: {0}\n", oldUser.Name);
                     break;
 
                 case NotifyCollectionChangedAction.Replace: // если замена
 
                     User replacedUser = e.OldItems[0] as User;
                     User replacingUser = e.NewItems[0] as User;
-                    Console.WriteLine("Объект {0} заменен объектом {1}",
+                    Console.WriteLine("Объект {0} заменен объектом {1}\n",
                                         replacedUser.Name, replacingUser.Name);
 
                     break;
