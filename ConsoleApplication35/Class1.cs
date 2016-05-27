@@ -78,7 +78,7 @@ namespace ConsoleApplication35
 
                         {
                             case 1:
-                                Console.WriteLine("Введите имя и возраст нового участника");
+                                Console.WriteLine("\nВведите имя и возраст нового участника");
                                 
                                 string z = Console.ReadLine();
 
@@ -86,7 +86,7 @@ namespace ConsoleApplication35
 
                                     if (l > 150)
                                     {
-                                        Console.WriteLine("Столько не живут");
+                                        Console.WriteLine("Столько не живут.Приложение закрывается");
                                         Environment.Exit(0);
                                     }
 
@@ -105,12 +105,12 @@ namespace ConsoleApplication35
                                 break;
 
                             case 2:
-                                Console.WriteLine("Введите индекс удаляемого обьекта");
+                                Console.WriteLine("\nВведите индекс удаляемого обьекта");
                                 int g = int.Parse(Console.ReadLine());
 
                                 if (g > 3)
                                 {
-                                    Console.WriteLine("Выход за пределы массива");
+                                    Console.WriteLine("\nВыход за пределы массива");
                                     Environment.Exit(2);
                                 }
 
@@ -128,37 +128,37 @@ namespace ConsoleApplication35
                                 break;
 
                             case 3:
-                                Console.WriteLine("Введите индекс изменяемого обьекта");
+                                Console.WriteLine("\nВведите индекс изменяемого обьекта");
 
                                 int a = int.Parse(Console.ReadLine());
 
                                 if (a > 3)
                                 {
-                                    Console.WriteLine("Выход за пределы массива");
+                                    Console.WriteLine("\nВыход за пределы массива");
                                     Environment.Exit(2);
                                 }
 
-                                Console.WriteLine("Введите новое имя и новый возраст");
+                                Console.WriteLine("\nВведите новое имя и новый возраст");
 
                                 string t = Console.ReadLine();
                                 int y = int.Parse(Console.ReadLine());
 
                                 if (y > 150)
                                 {
-                                    Console.WriteLine("Ошибка ввода возраста");
-                                    Environment.Exit(1);
+                                    Console.WriteLine("\nОшибка ввода возраста");
+                                    Environment.Exit(0);
                                 }
 
                                 foreach (User theNameAge in users2)
                                 {
-                                    Console.WriteLine("Старый список " + theNameAge.Name + "  " + theNameAge.Age + "\n");
+                                    Console.WriteLine("Старый список " + theNameAge.Name + "  " + theNameAge.Age);
                                 }
 
                                 users[a] = new User { Name = t, Age = y };
 
                                 foreach (User theNameAge in users)
                                 {
-                                    Console.WriteLine("Новый список " + theNameAge.Name + "  " + theNameAge.Age + "\n");
+                                    Console.WriteLine("Новый список " + theNameAge.Name + "  " + theNameAge.Age);
                                 }
                                 break;
 
@@ -187,20 +187,20 @@ namespace ConsoleApplication35
                 case NotifyCollectionChangedAction.Add: // если добавление
 
                     User newUser = e.NewItems[0] as User;
-                    Console.WriteLine("Добавлен новый объект: {0}\n", newUser.Name);
+                    Console.WriteLine("\nДобавлен новый объект: {0}\n", newUser.Name);
                     break;
 
                 case NotifyCollectionChangedAction.Remove: // если удаление
 
                     User oldUser = e.OldItems[0] as User;
-                    Console.WriteLine("Удален объект: {0}\n", oldUser.Name);
+                    Console.WriteLine("\nУдален объект: {0}\n", oldUser.Name);
                     break;
 
                 case NotifyCollectionChangedAction.Replace: // если замена
 
                     User replacedUser = e.OldItems[0] as User;
                     User replacingUser = e.NewItems[0] as User;
-                    Console.WriteLine("Объект {0} заменен объектом {1}\n",
+                    Console.WriteLine("\nОбъект {0} заменен объектом {1}\n",
                                         replacedUser.Name, replacingUser.Name);
 
                     break;
