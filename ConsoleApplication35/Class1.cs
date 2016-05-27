@@ -68,7 +68,8 @@ namespace ConsoleApplication35
 2) Удаление
 3) Изменение
 4) Выход
-"); try
+");
+                    try
                     {
                         int b = int.Parse(Console.ReadLine());
 
@@ -78,15 +79,16 @@ namespace ConsoleApplication35
                         {
                             case 1:
                                 Console.WriteLine("Введите имя и возраст нового участника");
-
+                                
                                 string z = Console.ReadLine();
+
                                 int l = int.Parse(Console.ReadLine());
 
-                                if (l > 150)
-                                {
-                                    Console.WriteLine("Ошибка ввода возраста");
-                                    Environment.Exit(1);
-                                }
+                                    if (l > 150)
+                                    {
+                                        Console.WriteLine("Столько не живут");
+                                        Environment.Exit(0);
+                                    }
 
                                 foreach (User theNameAge in users2)
                                 {
@@ -165,9 +167,9 @@ namespace ConsoleApplication35
                                 break;
                         }
                     }
-                    catch
+                    catch(Exception e)
                     {
-                        Console.WriteLine("Ввод только цифр от 1 до 4");
+                        Console.WriteLine("НЕВЕРНЫЙ ВВОД ТИПОВ ЗНАЧЕНИЙ ПРИЛОЖЕНИЕ ВЗРЫВАЕТСЯ", e.Message);
                     }
 
                 }
