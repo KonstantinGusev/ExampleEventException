@@ -12,26 +12,46 @@ namespace ConsoleApplication1
     /// Класс для возврата нового и старого значения
     /// Содержит события для обработчика событий
     /// </summary>
-    public class ChangeNameAgeEventArg : EventArgs
+    public class ChangedNameAgeEventArg : EventArgs
     {
-        public string OldName { get; set; }
-        public string NewName { get; set; }
-
-        public int OldAge { get; set; }
-        public int NewAge { get; set; }
-
-        public ChangeNameAgeEventArg(string oldName, string newName)
+        public ChangedNameAgeEventArg(string name = "", int age = 0)
         {
-            OldName = oldName;
-            NewName = newName;
+            this.Name = name;
+            this.Age = age;
         }
 
-        public ChangeNameAgeEventArg(int oldAge, int newAge)
-        {
-            OldAge = oldAge;
-            NewAge = newAge;
-        }
+        public string Name { get; private set; }
+
+        public int Age { get; private set; }
     }
+
+
+    
+         class ChangingNameAgeArgs : EventArgs
+        {
+
+            public ChangingNameAgeArgs(string oldName, string newName = "")
+            {
+                this.OldName = oldName;
+                this.NewName = newName;
+            }
+
+            public ChangingNameAgeArgs(int oldAge, int newAge)
+            {
+                this.OldAge = oldAge;
+                this.newAge = newAge;
+            }
+
+            
+            public int newAge { get; private set; }
+
+            public int OldAge { get; private set; }
+
+            public string NewName { get; private set; }
+
+            public string OldName { get; private set; }
+        }
+    
 
     /// <summary>
     /// непосредственно сам класс который добавляет
@@ -43,28 +63,37 @@ namespace ConsoleApplication1
         public string name;
         public int age;
 
-        //Обработчики событий
-        public event EventHandler<ChangeNameAgeEventArg> OnChangeName;
-        public event EventHandler<ChangeNameAgeEventArg> OnChangeAge;
-
         public User(string name, int age)
         {
             this.name = name;
             this.age = age;
         }
 
-        public string Name {
+        //Обработчики событий
+        public event EventHandler<ChangingNameAgeArgs> OnChanging; 
+        public event EventHandler<ChangedNameAgeEventArg> OnChanged;
+
+        
+
+        public string Name
+        {
             get { return name; }
 
-            set {
-                if (OnChangeName != null)
+            set
+            {
+                if (this.OnChanging != null)
                 {
-                    OnChangeName(this, new ChangeNameAgeEventArg(Name, value));
-                    name = value;
+                    OnChanging(this, new ChangingNameAgeArgs(Name, value));
                 }
-                
+                this.name = value;
+
+                if (OnChanged != null)
+                {
+                    this.OnChanged(this, new ChangedNameAgeEventArg(Name, Age));
+                }
             }
         }
+        
 
         /// <summary>
         /// В свойство Age добавляем проверку на максимальный возраст
@@ -77,14 +106,19 @@ namespace ConsoleApplication1
             }
             set
             {
-                if (value > 150)
+                if (value >= 150)
                 {
                     throw new Exception(string.Format("Возраст не корректен", value));
                 }
-                else if (OnChangeAge != null)
+                if (OnChanging != null)
                 {
-                    OnChangeAge(this, new ChangeNameAgeEventArg(Age, value));
-                    this.age = value;
+                    OnChanging(this, new ChangingNameAgeArgs(this.Age,value));
+
+                }
+                this.age = value;
+                if (this.OnChanged!=null)
+                {
+                    this.OnChanged(this, new ChangedNameAgeEventArg(Name, Age));
                 }
             }
         }

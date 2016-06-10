@@ -11,23 +11,33 @@ namespace ConsoleApplication1
         static void Main(string[] args)
         {
 
-            User user = new User("Костя", 280);
-            user.OnChangeName += OldNewName;
-            user.OnChangeAge += OldNewAge;
+            User user = new User("Костя", 80);
+
+            user.OnChanging += User_OnChanging; ;
+            user.OnChanged += User_OnChanged;
+
             user.Name = "Ёжик";
             user.Age = 40;
             
 
         }
 
-        public static void OldNewName(object s, ChangeNameAgeEventArg e)
+        private static void User_OnChanged(object sender, ChangedNameAgeEventArg e)
         {
-            Console.WriteLine("Старое значение = {0}, новое значение = {1}", e.OldName, e.NewName);
+            Console.WriteLine("Имя = {0}, Возраст = {1}", e.Name, e.Age);
         }
 
-        public static void OldNewAge(object s, ChangeNameAgeEventArg e)
+        private static void User_OnChanging(object sender, ChangingNameAgeArgs e)
         {
-            Console.WriteLine("Старое значение = {0}, новое значение = {1}", e.OldAge, e.NewAge);
+            if (e.newAge != 0)
+            {
+                Console.WriteLine("Старый возраст = {0},новый возраст = {1}",e.OldAge,e.newAge);
+            }
+            if(e.NewName!=null)
+            {
+                Console.WriteLine("Старое имя = {0},новое имя = {1}",e.OldName, e.NewName);
+            }
         }
+
     }
 }
